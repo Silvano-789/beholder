@@ -18,15 +18,17 @@ function Login() {
 
     function onSubmit(event){
         event.preventDefault();
+
         doLogin(email, password)
-        .then(isValid => {
-            if(isValid){
-                //history.push('/settings');
-                console.log('Logou com sucesso')
+        .then(reponse => {
+            if(reponse){
+                localStorage.setItem( 'token', reponse.token);
+                history.push('/settings');
             }
         })
         .catch(err => {
-            setError(err);
+            console.error(err);
+            setError('Usuário ou senha inválido.');
         });
     }
 
@@ -38,7 +40,7 @@ function Login() {
                         <Link to="/" className='d-flex align-items-center justify-content-center'>
                             <svg className="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd"></path></svg>
                         </Link>
-                        Back to home page
+                        Voltar para a home
                     </p>
                     <div className="col-12 d-flex align-items-center justify-content-center">
                         <div className="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
@@ -46,31 +48,31 @@ function Login() {
                                 <img src='/img/favicon/mstile-150x150.png' alt='Beholder' width={64} />
                             </div>
                             <div className="text-center text-md-center mb-4 mt-md-0">
-                                <h1 className="mb-0 h3">Sign in to our platform</h1>
+                                <h1 className="mb-0 h3">Entrar no Beholder</h1>
                             </div>
                             <form action="#" className="mt-4" onSubmit={onSubmit}>
                                 <div className="form-group mb-4">
-                                    <label htmlFor="email">Your Email</label>
+                                    <label htmlFor="email">Seu Email</label>
                                     <div className="input-group">
                                         <span className="input-group-text" id="email">
                                             <svg className="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
                                         </span>
-                                        <input type="email" className="form-control" placeholder="example@company.com" id="email" required onChange={onChangeInput}/>
+                                        <input type="email" className="form-control" placeholder="E-mail" id="email" required onChange={onChangeInput}/>
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <div className="form-group mb-4">
-                                        <label htmlFor="password">Your Password</label>
+                                        <label htmlFor="password">Sua Senha</label>
                                         <div className="input-group">
                                             <span className="input-group-text" id="password">
                                                 <svg className="icon icon-xs text-gray-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd"></path></svg>
                                             </span>
-                                            <input type="password" placeholder="Password" className="form-control" id="password" required onChange={onChangeInput}/>
+                                            <input type="password" placeholder="Senha" className="form-control" id="password" required onChange={onChangeInput}/>
                                         </div>  
                                     </div>
                                 </div>
                                 <div className="d-grid">
-                                    <button type="submit" className="btn btn-gray-800">Sign in</button>
+                                    <button type="submit" className="btn btn-gray-800">Entrar</button>
                                 </div>
                                 {
                                     error? 
