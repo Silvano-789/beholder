@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 import Login from './public/login/Login';
-import Settings from './private/Settings';
+import Settings from './private/Settings/Settings';
 
 function Routes() {
 

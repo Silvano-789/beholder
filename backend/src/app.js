@@ -3,12 +3,18 @@ require('express-async-errors');
 const cors = require('cors');
 const helmet = require('helmet');
 const authMiddleware = require('./middlewares/authMiddleware');
+const morgan = require('morgan');
+
+const symbolsRouter = require('./routers/symbolsRouter');
+const settingsRouter = require('./routers/settingsRouter');
+
 const authController = require('./controllers/authController');
-const settingsController = require('./controllers/settingsController');
 
 const app = express();
 
-app.use(cors());
+app.use(morgan('dev'));
+
+app.use(cors({ origin: process.env.CORS_ORIGIN }));
 
 app.use(helmet());
 
@@ -16,10 +22,12 @@ app.use(express.json());
 
 app.post('/login', authController.doLogin);
 
-app.get('/settings', authMiddleware, settingsController.getSettings);
+app.use('/settings', authMiddleware, settingsRouter);
+
+app.use('/symbols', authMiddleware, symbolsRouter);
 
 app.post('/logout', authController.doLogout);
 
 app.use(require('./middlewares/errorMiddleware'));
 
-module.exports = app
+module.exports = app;

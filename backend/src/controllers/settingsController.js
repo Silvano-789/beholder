@@ -1,6 +1,15 @@
-function getSettings(req, res, next) {
-    res.json({
-        email: 'silvano789@hotmail.com',
-    });
+const settingsRepository = require('../repositories/settingsRepository');
+async function getSettings(req, res, next) {
+    const settingsId = res.locals.token.id;
+    const settings = await settingsRepository.getSettings(settingsId);
+    res.json(settings);
 }
-module.exports = { getSettings }
+
+async function updateSettings(req, res, next) {
+    const settingsId = res.locals.token.id;
+    const newSettings = req.body;
+    settingsRepository.updateSettings(settingsId, newSettings);
+    res.sendStatus(200);
+}
+
+module.exports = { getSettings, updateSettings }
