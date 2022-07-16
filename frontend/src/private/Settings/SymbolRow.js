@@ -8,6 +8,7 @@ import React from "react";
  * - minNotional 
  * - minLotSize
  * - isFavorite
+ * - onClick
  */
 function SymbolRow(props) {
     return (
@@ -33,8 +34,8 @@ function SymbolRow(props) {
                 {props.data.minLotSize}
             </td>
             <td>
-                <button id={"edit" + props.data.symbol} className="btn btn-secondary animate-up-2" with={32}>
-                    <svg id={"edit" + props.data.symbol} className="icon icon-xs" fill="none" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <button id={"edit" + props.data.symbol} className="btn btn-secondary animate-up-2" with={32} data-bs-toggle="modal" data-bs-target="#modalSymbol" onClick={props.onClick}>
+                    <svg id={"edit" + props.data.symbol} className="icon icon-xs" fill="none" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}  onClick={props.onClick}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                 </button>

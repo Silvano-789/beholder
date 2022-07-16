@@ -1,10 +1,10 @@
 const symbolModel = require('../models/symbolModel');
 
-function getAllSymbols() {
+async function getAllSymbols() {
     return symbolModel.findAll();
 }
 
-function getSymbol(symbol) {
+async function getSymbol(symbol) {
     return symbolModel.findOne({ where: { symbol } });
 }
 
@@ -22,6 +22,12 @@ async function updateSymbol(symbolId, newSymbol) {
 
     if (newSymbol.minLotSize && newSymbol.minLotSize !== currentSymbol.minLotSize)
         currentSymbol.minLotSize = newSymbol.minLotSize;
+
+    if (newSymbol.base && newSymbol.base !== currentSymbol.base)
+        currentSymbol.base = newSymbol.base;
+
+    if (newSymbol.quote && newSymbol.quote !== currentSymbol.quote)
+        currentSymbol.quote = newSymbol.quote;
 
     if (newSymbol.isFavorite !== null && newSymbol.isFavorite !== undefined
         && newSymbol.isFavorite !== currentSymbol.isFavorite)

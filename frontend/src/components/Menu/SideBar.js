@@ -41,7 +41,7 @@ function SideBar() {
                             <span className="sidebar-icon">
                                 <img src="/img/favicon/favicon-32x32.png" height="32" width="32" alt="Beholder Logo" />
                             </span>
-                            <span className="mt-1 ms-1 sidebar-text">Beholder Menu</span>
+                            <span className="mt-1 ms-1 sidebar-text">Bit-Tron Menu</span>
                         </Link>
                     </li>
                     <SideBarItem to="/dashboard" text="Dashboard">
@@ -69,7 +69,7 @@ function SideBar() {
                         </svg>
                     </SideBarItem>
                     <li role="separator" className="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-                    <SideBarItem to="/" text="Logout" onClick={onLogoutClick}>
+                    <SideBarItem to="/" text="Sair" onClick={onLogoutClick}>
                         <svg className="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">

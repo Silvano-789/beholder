@@ -21,21 +21,27 @@ async function updateSymbol(req, res, next) {
 }
 
 async function syncSymbols(req, res, next) {
+  
+    const favoriteSymbols = (await symbolsRepository.getAllSymbols()).filter(s => s.isFavorite).map(s => s.symbol);
+    
     const settingsRepository = require('../repositories/settingsRepository');
-    const settings = await settingsRepository.getSettings(res.locals.token.id);
-    settings.secretKey = crypto.decrypt(settings.secretKey);
+    const settings = await settingsRepository.getDecryptedSettings(res.locals.token.id);
+    const exchange = require('../utils/exchange')(settings);
 
-    const exchange = require('../utils/exchange')(settings.get({ plain: true }));
      const symbols = (await exchange.exchangeInfo()).symbols.map(item => {
+
          const minNotionalFilter = item.filters.find(filter => filter.filterType === 'MIN_NOTIONAL');
          const minLotSizeFilter = item.filters.find(filter => filter.filterType === 'LOT_SIZE');
+
          return {
              symbol: item.symbol,
              basePrecision: item.baseAssetPrecision,
              quotePrecision: item.quoteAssetPrecision,
+             base: item.baseAsset,
+             quote: item.quoteAsset,
              minNotional: minNotionalFilter ? minNotionalFilter.minNotional : '1',
              minLotSize: minLotSizeFilter ? minLotSizeFilter.minQty : '1',
-             isFavorite: false
+             isFavorite: favoriteSymbols.some(s => s === item.symbol)
          }
      });
 
