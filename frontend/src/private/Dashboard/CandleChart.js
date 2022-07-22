@@ -13,7 +13,7 @@ function CandleChart(props) {
         const w = new window.TradingView.widget({
             symbol: 'BINANCE:' + props.symbol,
             autosize: true,
-            interval: "1",
+            interval: "30",
             timezone: "Etc/UTC",
             theme: "dark",
             style: "1",

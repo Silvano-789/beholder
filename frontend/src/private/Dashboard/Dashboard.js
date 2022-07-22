@@ -6,13 +6,21 @@ import BookTicker from './BookTicker/BookTicker';
 import Wallet from './Wallet/Wallet';
 import CandleChart from './CandleChart';
 import NewOrderButton from '../../components/NewOrder/NewOrderButton';
+import NewOrderModal from '../../components/NewOrder/NewOrderModal';
 
 function Dashboard() {
 
     const [miniTickerState, setMiniTickerState] = useState('');
     const [bookState, setBookState] = useState({});
     const [balanceState, setBalanceState] = useState({});
+    const [wallet, setWallet] = useState({});
+    
+    /* sicroniza saldo de carteira*/
+    function onWalletUpdate(walletObj){
+        setWallet(walletObj);
+    }
 
+    /* conecta com o webSocket da Binance para receber informações */
     const { lastJsonMessage } = useWebSocket(process.env.REACT_APP_WS_URL, {
         onOpen: () => console.log(`Connected to App ws Server.`),
         onMessage: () => {
@@ -53,10 +61,11 @@ function Dashboard() {
                 </div>
                 <div className='row'>
                     <BookTicker data={bookState} />
-                    <Wallet data={balanceState}/>
+                    <Wallet data={balanceState} onUpdate={onWalletUpdate}/>
                 </div>
                 
             </main>
+            <NewOrderModal wallet={wallet}/>
         </React.Fragment>
     );
 }

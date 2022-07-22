@@ -137,7 +137,7 @@ function Settings() {
                                 <div className="row">
                                     <div className="col-sm-12 mb-3">
                                         <div className="form-group">
-                                            <label htmlFor="streamUrl">URL STREAM</label>
+                                            <label htmlFor="streamUrl">URL Stream (Web Sockets)</label>
                                             <input ref={inputStreamUrl} className="form-control" id="streamUrl" type="text" placeholder="URL de Stream" />
                                         </div>
                                     </div>

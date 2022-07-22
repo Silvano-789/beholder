@@ -6,6 +6,8 @@ import '../Dashboard.css';
 /**
  *   props
  * - data
+ * - onUpdate
+ * Componente de carteira buscando saldo no backend, que busca na binance.
  */
 function Wallet(props) {
 
@@ -24,6 +26,9 @@ function Wallet(props) {
                     onOrder: item[1].onOrder
                  }
                })
+               /* manda informações da carteira para ser usadas na order*/
+               if(props.onUpdate) props.onUpdate(balances);
+               
                 setBalances(balances);
             })
             .catch(err => {
