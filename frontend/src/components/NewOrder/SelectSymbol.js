@@ -33,6 +33,7 @@ function SelectSymbol(props) {
 
                 if (symbolsNames.length) {
                     setSymbols(symbolsNames);
+                    selectRef.current.value = symbolsNames[0];
                     props.onChange({ target: { id: 'symbol', value: symbolsNames[0] } })
                 }
                 else setSymbols(['NENHUM SIMBOLO.'])

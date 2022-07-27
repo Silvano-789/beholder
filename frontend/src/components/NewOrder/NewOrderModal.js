@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { getSymbol } from '../../services/SymbolsService';
 import SelectSymbol from './SelectSymbol';
 import SymbolPrice from './SymbolPrice';
@@ -7,7 +8,13 @@ import SelectSide from './SelectSide';
 import OrderType from './OrderType';
 import QuantityInput from './QuantityInput';
 import { STOP_TYPES } from '../../services/ExchangeService';
+import { placeOrder } from '../../services/OrderService';
 
+/**
+ *  props 
+ * - wallet
+ * - onSubmit 
+ */
 function NewOrderModal(props) {
 
     /* ordem padrão */
@@ -24,6 +31,7 @@ function NewOrderModal(props) {
     const btnClose = useRef();
     const btnSend = useRef();
     const inputTotal = useRef();
+    const history = useHistory();
 
     const [error, setError] = useState('');
     const [order, setOrder] = useState(DEFAULT_ORDER);
@@ -43,7 +51,20 @@ function NewOrderModal(props) {
     }, [props.wallet]);
 
     function onSubmit(event) {
-        console.log('click');
+        const token = localStorage.getItem('token');
+        placeOrder(order, token)
+            .then(result => {
+                btnClose.current.click();
+                if (props.onSubmit) props.onSubmit(result);
+            })
+            .catch(err => {
+                if (err.response && err.response.status === 401) {
+                    btnClose.current.click();
+                    return history.push('/');
+                }
+                console.error(err);
+                setError(err.message);
+            });
     }
 
     function onInputChange(event) {
@@ -61,8 +82,10 @@ function NewOrderModal(props) {
         getSymbol(order.symbol, token)
             .then(symbol => setSymbol(symbol))
             .catch(err => {
-                console.error(err.response ? err.response.data : err.message)
-                setError(err.response ? err.response.data : err.message);
+                if (err.response && err.response.status === 401) {
+                    btnClose.current.click();
+                    return history.push('/');
+                }
             })
     }, [order.symbol])
 
@@ -102,6 +125,7 @@ function NewOrderModal(props) {
 
     }, [order.quantity, order.price, order.icebergQuantity]);
 
+    /* funções de mudanças de comportamentos da modal */
     function getPriceClasses(orderType) {
         return orderType === 'MARKET' ? 'col-md-6 mb-3 d-none' : 'col-md-6 mb-3';
     }
@@ -112,6 +136,26 @@ function NewOrderModal(props) {
 
     function getStopPriceClasses(orderType) {
         return STOP_TYPES.indexOf(orderType) !== -1 ? 'col-md-6 mb-3 ' : 'col-md-6 mb-3 d-none';
+    }
+
+    /* pega preço atual do book */
+    function onPriceChange(book) {
+        btnSend.current.disabled = false;
+        setError('');
+
+        const quantity = parseFloat(order.quantity);
+        if (order.type === 'MARKET' && quantity) {
+            if (order.side === 'BUY') {
+                inputTotal.current.value = `${quantity * parseFloat(book.ask)}`.substring(0, 8);
+            } else {
+                inputTotal.current.value = `${quantity * parseFloat(book.bid)}`.substring(0, 8);
+            }
+
+            if (parseFloat(inputTotal.current.value) < order.minNotional) {
+                btnSend.current.disabled = true;
+                return setError('Valor inválido, valor minímo é de ' + order.minNotional);
+            }
+        }
     }
 
     return (
@@ -135,7 +179,7 @@ function NewOrderModal(props) {
                                 <div className='col-md-6 mb-3'>
                                     {
                                         isVisible
-                                            ? <SymbolPrice symbol={order.symbol} />
+                                            ? <SymbolPrice symbol={order.symbol} onChange={onPriceChange} />
                                             : <React.Fragment></React.Fragment>
                                     }
                                 </div>

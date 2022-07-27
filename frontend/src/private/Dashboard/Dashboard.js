@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import useWebSocket from 'react-use-websocket';
 import Menu from '../../components/Menu/Menu';
 import MiniTicker from './Miniticker/Miniticker';
@@ -14,10 +15,15 @@ function Dashboard() {
     const [bookState, setBookState] = useState({});
     const [balanceState, setBalanceState] = useState({});
     const [wallet, setWallet] = useState({});
+    const history = useHistory();
     
     /* sicroniza saldo de carteira*/
     function onWalletUpdate(walletObj){
         setWallet(walletObj);
+    }
+
+    function onOrderSubmit(order){
+        history.push('/orders/'+ order.symbol);
     }
 
     /* conecta com o webSocket da Binance para receber informações */
@@ -65,7 +71,7 @@ function Dashboard() {
                 </div>
                 
             </main>
-            <NewOrderModal wallet={wallet}/>
+            <NewOrderModal wallet={wallet} onSubmit={onOrderSubmit}/>
         </React.Fragment>
     );
 }

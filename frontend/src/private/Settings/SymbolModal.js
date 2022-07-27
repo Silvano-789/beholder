@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { updateSymbol } from '../../services/SymbolsService';
+import { useHistory } from 'react-router-dom';
 
 /**
  * props
@@ -9,6 +10,7 @@ import { updateSymbol } from '../../services/SymbolsService';
 function SymbolModal(props) {
 
     const btnClose = useRef('');
+    const history = useHistory();
     const [error, setError] = useState('');
     const [symbol, setSymbol] = useState('');
 
@@ -39,7 +41,15 @@ function SymbolModal(props) {
                 props.onSubmit({ target: { id: 'symbol', value: symbol }});
                 btnClose.current.click();
         })
-        .catch (err => setError(err.response ? err.response.data : err.message));
+        .catch (err => {
+            if(err.response && err.response.status === 401){
+                btnClose.current.click();
+                return history.push('/');
+            }
+
+            console.error(err);
+            setError(err.message);
+        });
 
 }
 return (

@@ -39,7 +39,7 @@ function SideBar() {
                     <li className="nav-item">
                         <Link to="/dashboard" className="nav-link d-flex align-items-center">
                             <span className="sidebar-icon">
-                                <img src="/img/favicon/favicon-32x32.png" height="32" width="32" alt="Beholder Logo" />
+                                <img src="/img/favicon/favicon-32x32.png" height="32" width="32" alt="Bit-Tron Logo" />
                             </span>
                             <span className="mt-1 ms-1 sidebar-text">Bit-Tron Menu</span>
                         </Link>
