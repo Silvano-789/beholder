@@ -36,7 +36,7 @@ async function placeOrder(req, res, next) {
         side,
         limitPrice: price,
         stopPrice: options ? options.stopPrice : null,
-        iceBergQuantity: options ? options.iceBergQty : null,
+        iceBergQty: options ? options.iceBergQty : null,
         orderId: result.orderId,
         clientOrderId: result.clientOrderId,
         transactTime: result.transactTime,

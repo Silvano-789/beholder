@@ -47,7 +47,7 @@ const orderModel = database.define('order', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    icebergQuantity: Sequelize.STRING,
+    icebergQty: Sequelize.STRING,
     obs: Sequelize.STRING,
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
