@@ -7,6 +7,7 @@ function Menu(){
         <React.Fragment>
             <NavBar/>
             <SideBar/>
+            
         </React.Fragment>
     )
 }

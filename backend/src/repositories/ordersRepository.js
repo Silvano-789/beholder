@@ -1,7 +1,7 @@
 const orderModel = require('../models/orderModel')
 const Sequelize = require('sequelize');
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 7;
 
 /* função de paginação de resultados */
 function getOrders(symbol, page = 1) {
@@ -35,14 +35,10 @@ async function getOrder(orderId, clientOrderId) {
     return order;
 }
 
-async function updateOrderById(id, newOrder) {
-    const order = await getOrderById(id);
-    return updateOrder(order, newOrder);
-}
-
 async function updateOrderByOrderId(orderId, clientOrderId, newOrder) {
-    console.log('ORDER ID: '+ orderId + ' CLIENT ID: ' + clientOrderId);
     const order = await getOrder(orderId, clientOrderId);
+    //console.log('ORDEM: ',order)
+    if (!order) return false;
     return updateOrder(order, newOrder);
 }
 
@@ -81,6 +77,5 @@ module.exports = {
     getOrderById,
     getOrder,
     getOrders,
-    updateOrderById,
     updateOrderByOrderId
 }

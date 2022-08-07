@@ -72,6 +72,7 @@ function Dashboard() {
                 
             </main>
             <NewOrderModal wallet={wallet} onSubmit={onOrderSubmit}/>
+           
         </React.Fragment>
     );
 }

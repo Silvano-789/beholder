@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     const defaultSymbol = 'BTCBUSD';
-    const symbol = await queryInterface.rawSelect('symbol', { where: { symbol: defaultSymbol } }, ['id']);
+    const symbol = await queryInterface.rawSelect('symbols', { where: { symbol: defaultSymbol } }, ['id']);
     if (!symbol) {
       return queryInterface.bulkInsert('symbols', [{
         symbol: defaultSymbol,

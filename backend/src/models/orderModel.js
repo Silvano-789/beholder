@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../db');
 
-const orderModel = database.define('order', {
+const orderModel = database.define('orders', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -14,7 +14,7 @@ const orderModel = database.define('order', {
         allowNull: false
     },
     orderId: {
-        type: Sequelize.STRING,
+        type: Sequelize.BIGINT,
         allowNull: false
     },
     clientOrderId: {
@@ -40,7 +40,7 @@ const orderModel = database.define('order', {
     isMaker: Sequelize.BOOLEAN,
     limitPrice: Sequelize.STRING,
     stopPrice: Sequelize.STRING,
-    avgPrice: Sequelize.DECIMAL,
+    avgPrice: Sequelize.DECIMAL(18,8),
     commission: Sequelize.STRING,
     net: Sequelize.DECIMAL(18,8),
     quantity: {

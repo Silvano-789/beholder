@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { doLogout } from "../../services/AuthService";
 import SideBarItem from "./SideBarItem";
+import Footer from "../../public/login/Footer";
 
 function SideBar() {
     const history = useHistory();
@@ -41,7 +42,7 @@ function SideBar() {
                             <span className="sidebar-icon">
                                 <img src="/img/favicon/favicon-32x32.png" height="32" width="32" alt="Bit-Tron Logo" />
                             </span>
-                            <span className="mt-1 ms-1 sidebar-text">Bit-Tron Menu</span>
+                            <span className="mt-1 ms-1 sidebar-text">V-Cripto Menu</span>
                         </Link>
                     </li>
                     <SideBarItem to="/dashboard" text="Dashboard">
@@ -74,9 +75,13 @@ function SideBar() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                 d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
                             </path>
-                        </svg>  
+                        </svg>
                     </SideBarItem>
+                    <li className="footer-menu">
+                        <Footer />
+                    </li>
                 </ul>
+
             </div>
         </nav>
     </React.Fragment >)

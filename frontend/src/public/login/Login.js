@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import {useHistory } from 'react-router-dom';
 import { doLogin } from '../../services/AuthService';
+import Footer from './Footer';
 
 function Login() {
+    const year = process.env.REACT_APP_YEAR;
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -42,7 +44,7 @@ function Login() {
                                 <img src='/img/favicon/mstile-150x150.png' alt='CRIP-T' width={64} />
                             </div>
                             <div className="text-center text-md-center mb-3 mt-md-0">
-                                <h1 className="mb-0 h5">Bit-Tron Trading</h1>
+                                <h5 className="mb-0 h5">V-Cripto Trading Bot</h5>
                                 <small>version 1.0.1</small>
                             </div>
                             <form action="#" className="mt-4" onSubmit={onSubmit}>
@@ -79,7 +81,7 @@ function Login() {
                             </form>
                             <div className="text-center text-md-center mb-0 mt-3">
                                 <small>
-                                    Niu Soluções - 2022
+                                    Powered by <b className='name'>Niu Soluções</b> - {year}
                                 </small>
                             </div>
 

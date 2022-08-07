@@ -36,7 +36,7 @@ async function placeOrder(req, res, next) {
         side,
         limitPrice: price,
         stopPrice: options ? options.stopPrice : null,
-        iceBergQty: options ? options.iceBergQty : null,
+        icebergQty: options ? options.icebergQty : null,
         orderId: result.orderId,
         clientOrderId: result.clientOrderId,
         transactTime: result.transactTime,
@@ -54,7 +54,7 @@ async function cancelOrder(req, res, next) {
     const { symbol, orderId } = req.params;
 
     let result;
-    try {
+     try {
         result = await exchange.cancel(symbol, orderId);
     } catch (error) {
         return res.status(400).json(error.body);
@@ -64,7 +64,6 @@ async function cancelOrder(req, res, next) {
         status: result.status
     })
     res.json(order.get({ plain: true }));
-
 }
 
 module.exports = {

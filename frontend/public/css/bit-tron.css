@@ -1,3 +1,25 @@
-svg{
+svg {
     pointer-events: none;
+}
+
+.content-footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.name {
+    text-align: center;
+    color: blueviolet;
+}
+
+.vlrLiqui {
+    color: green;
+}
+
+.footer-menu{
+    margin-top: 220px;
+}
+
+.button-modal{
+    margin-right: 320px;
 }

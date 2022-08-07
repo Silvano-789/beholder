@@ -22,7 +22,7 @@ app.use(helmet());
 
 app.use(express.json());
 
-app.post('/login', authController.doLogin);
+app.post('/login', authController.doLogin); 
 
 app.use('/settings', authMiddleware, settingsRouter);
 
